@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tesla Login Complete</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      padding: 2rem;
+      line-height: 1.5;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    .box {
+      background: #1c1c1c;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      word-break: break-all;
+      font-family: monospace;
+    }
+    button {
+      background: #e82127;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #555;
+      cursor: default;
+    }
+    .status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login successful</h1>
+  <p>
+    Tesla authentication is complete.
+    <strong>Copy the full URL below</strong> and paste it back into your terminal.
+  </p>
+
+  <div class="box" id="url"></div>
+
+  <button id="copyBtn">Copy URL</button>
+  <div class="status" id="status"></div>
+
+  <script>
+    const fullUrl = window.location.href;
+    const urlBox = document.getElementById("url");
+    const status = document.getElementById("status");
+    const copyBtn = document.getElementById("copyBtn");
+
+    urlBox.textContent = fullUrl;
+
+    async function copyToClipboard() {
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+        status.textContent = "URL copied to clipboard. You may return to the terminal.";
+      } catch (err) {
+        status.textContent = "Unable to auto-copy. Please select and copy manually.";
+      }
+    }
+
+    copyBtn.addEventListener("click", copyToClipboard);
+
+    // Attempt automatic copy on load (may fail due to browser permissions)
+    copyToClipboard();
+  </script>
+
+</body>
+</html>
